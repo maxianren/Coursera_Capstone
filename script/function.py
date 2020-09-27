@@ -109,3 +109,32 @@ for f in df_js['features']:
 df_geo_js_seattle=pd.DataFrame.from_dict(dic_geo_js_seattle)
 
 df_geo_js_seattle
+
+'''----------------------------------------------------------------------------'''
+'''
+Geojson into dataframe: centroid
+'''
+
+# create map and display it
+#seattle_map = folium.Map(location=[47.615, -122.28], zoom_start=11)
+
+# instantiate a feature group for the incidents in the dataframe
+accidents = folium.map.FeatureGroup()
+
+# loop through the 100 crimes and add each to the incidents feature group
+for centroid in df_geo['centroid_coordinates']:
+
+
+    accidents.add_child(
+        folium.CircleMarker(
+            centroid,
+            radius=2, # define how big you want the circle markers to be
+            color='green',
+            fill=True,
+            fill_color='red',
+            fill_opacity=.7
+        )
+    )
+
+# add incidents to map
+seattle_map.add_child(accidents)
